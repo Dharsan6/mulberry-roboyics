@@ -33,6 +33,9 @@ class SpatialIDWInterpolator:
         obs_k = obs_df["potassium"].values
         obs_ph = obs_df["ph"].values
         obs_ec = obs_df["ec"].values
+        obs_moist = obs_df["moisture"].values
+        obs_temp = obs_df["temperature"].values if "temperature" in obs_df.columns else np.full(len(obs_df), 26.5)
+        obs_health = obs_df["soil_health_index"].values if "soil_health_index" in obs_df.columns else np.full(len(obs_df), 80.0)
 
         # Targets (Mulberry)
         target_n, target_p, target_k = 350.0, 140.0, 140.0
@@ -53,6 +56,9 @@ class SpatialIDWInterpolator:
                 pred_k = np.sum(weights * obs_k) / weights_sum
                 pred_ph = np.sum(weights * obs_ph) / weights_sum
                 pred_ec = np.sum(weights * obs_ec) / weights_sum
+                pred_moist = np.sum(weights * obs_moist) / weights_sum
+                pred_temp = np.sum(weights * obs_temp) / weights_sum
+                pred_health = np.sum(weights * obs_health) / weights_sum
 
                 # Shortfalls
                 n_def = float(np.maximum(target_n - pred_n, 0.0))
@@ -68,7 +74,10 @@ class SpatialIDWInterpolator:
                     "predicted_p_deficiency": float(round(p_def, 2)),
                     "predicted_k_deficiency": float(round(k_def, 2)),
                     "predicted_ph": float(round(pred_ph, 2)),
-                    "predicted_ec": float(round(pred_ec, 2))
+                    "predicted_ec": float(round(pred_ec, 2)),
+                    "predicted_moisture": float(round(pred_moist, 1)),
+                    "predicted_temperature": float(round(pred_temp, 1)),
+                    "predicted_soil_health": float(round(pred_health, 1))
                 })
 
         return grid_points

@@ -55,4 +55,36 @@ def test_invalid_telemetry_range():
         "rover_state": "INTERROGATION"
     }
     res = client.post("/api/telemetry", json=payload)
-    assert res.status_code == 422  # Pydantic validation error
+    assert res.status_code == 422
+
+def test_plantation_summary():
+    res = client.get("/api/plantation/summary")
+    assert res.status_code == 200
+    data = res.json()
+    assert "total_samples" in data
+    assert "avg_ph" in data
+    assert "system_status" in data
+
+def test_prescriptions_endpoint():
+    res = client.get("/api/prescriptions")
+    assert res.status_code == 200
+    assert isinstance(res.json(), list)
+
+def test_predictions_endpoint():
+    res = client.get("/api/predictions?model_type=EfficientNet")
+    assert res.status_code == 200
+    data = res.json()
+    assert "predictions" in data
+
+def test_simulator_endpoints():
+    status = client.get("/api/simulator/status")
+    assert status.status_code == 200
+    assert "rover_state" in status.json()
+
+    step_res = client.post("/api/simulator/step")
+    assert step_res.status_code == 200
+
+def test_missions_endpoint():
+    res = client.get("/api/missions")
+    assert res.status_code == 200
+    assert isinstance(res.json(), list)

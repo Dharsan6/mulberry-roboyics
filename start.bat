@@ -3,10 +3,16 @@ echo ==================================================================
 echo   PRECISION SERICULTURE ROVER PLATFORM STARTUP SCRIPT (WINDOWS)   
 echo ==================================================================
 
-python -m pip install -r requirements.txt
+if exist .venv\Scripts\python.exe (
+    set PYTHON_CMD=.venv\Scripts\python.exe
+) else (
+    set PYTHON_CMD=python
+)
+
+echo Using Python interpreter: %PYTHON_CMD%
 
 echo Running ML Pipeline and Populating Database...
-python ml/pipeline.py
+%PYTHON_CMD% ml/pipeline.py
 
 echo Starting Demo Pipeline...
-python demo.py
+%PYTHON_CMD% demo.py

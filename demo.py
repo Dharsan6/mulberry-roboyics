@@ -5,6 +5,13 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(BASE_DIR))
 
+# Automatically detect .venv python executable if available
+venv_python = BASE_DIR / ".venv" / "bin" / "python"
+if os.name == "nt":
+    venv_python = BASE_DIR / ".venv" / "Scripts" / "python.exe"
+
+PY_EXEC = str(venv_python) if venv_python.exists() else sys.executable
+
 import time
 import subprocess
 import webbrowser
@@ -27,7 +34,7 @@ def run_demo():
     # 2. Start FastAPI Backend in background
     logging.info("STEP 2: Launching FastAPI Backend on http://localhost:8000 ...")
     backend_process = subprocess.Popen(
-        [sys.executable, "-m", "uvicorn", "backend.app.main:app", "--host", "127.0.0.1", "--port", "8000"],
+        [PY_EXEC, "-m", "uvicorn", "backend.app.main:app", "--host", "127.0.0.1", "--port", "8000"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
@@ -55,7 +62,7 @@ def run_demo():
     try:
         from backend.app.services.state_machine import RoverStateMachine
         sm = RoverStateMachine(stabilization_seconds=1)
-        for i in range(15):
+        for i in range(16):
             status = sm.step()
             state = status["rover_state"]
             wp = status["current_waypoint"]["id"]
@@ -68,23 +75,28 @@ def run_demo():
                     requests.post("http://localhost:8000/api/telemetry", json=status["latest_telemetry"], timeout=1.0)
                 except Exception:
                     pass
-            time.sleep(0.5)
+            time.sleep(0.4)
     except Exception as e:
         logging.warning(f"Simulator step execution warning: {e}")
 
     # 4. Launch Streamlit Dashboard
     logging.info("STEP 4: Launching Streamlit Dashboard on http://localhost:8501 ...")
     dashboard_process = subprocess.Popen(
-        [sys.executable, "-m", "streamlit", "run", "dashboard/app.py", "--server.port=8501"],
+        [PY_EXEC, "-m", "streamlit", "run", "dashboard/app.py", "--server.port=8501"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
 
     time.sleep(3.0)
-    webbrowser.open("http://localhost:8501")
+    try:
+        webbrowser.open("http://localhost:8501")
+    except Exception:
+        pass
 
     logging.info("==================================================================")
     logging.info("  DEMO RUNNING! Press Ctrl+C in terminal to stop all services.   ")
+    logging.info("  Backend API:  http://localhost:8000/docs                        ")
+    logging.info("  Dashboard UI: http://localhost:8501                             ")
     logging.info("==================================================================")
 
     try:

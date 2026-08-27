@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.app.config import settings
 from backend.app.database.connection import engine, Base
-from backend.app.api import telemetry, samples, analysis, predictions, prescriptions, simulator_api
+from backend.app.api import telemetry, samples, analysis, predictions, prescriptions, simulator_api, missions
 
 # Setup logging
 logging.basicConfig(level=settings.LOG_LEVEL, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -41,6 +41,7 @@ app.include_router(analysis.router)
 app.include_router(predictions.router)
 app.include_router(prescriptions.router)
 app.include_router(simulator_api.router)
+app.include_router(missions.router)
 
 @app.get("/health", tags=["System"])
 def health_check():
