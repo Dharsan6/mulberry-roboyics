@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-08-27T15:51:55.194246",
+  "baseline_random_forest": {
+    "N_MAE": 6.6,
+    "N_RMSE": 8.269,
+    "N_R2": 0.963,
+    "P_MAE": 3.097,
+    "P_RMSE": 3.866,
+    "P_R2": 0.959,
+    "K_MAE": 3.126,
+    "K_RMSE": 4.321,
+    "K_R2": 0.96
+  },
+  "efficientnet_spatial_regressor": {
+    "N_MAE": 13.788,
+    "N_RMSE": 20.779,
+    "N_R2": 0.766,
+    "P_MAE": 4.796,
+    "P_RMSE": 7.452,
+    "P_R2": 0.849,
+    "K_MAE": 4.957,
+    "K_RMSE": 6.874,
+    "K_R2": 0.899
+  }
+}

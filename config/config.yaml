@@ -1,0 +1,86 @@
+# Precision Sericulture Configuration File
+
+system:
+  project_title: "Precision Sericulture Automated Rover & Soil Intelligence"
+  version: "1.0.0"
+  mock_mode: true
+  log_level: "INFO"
+
+network:
+  api_host: "0.0.0.0"
+  api_port: 8000
+  dashboard_port: 8501
+  esp32_ip: "192.168.1.150"
+  esp32_port: 80
+  wifi_ssid: "Mulberry_Agronomy_Mesh"
+
+ros2:
+  domain_id: 42
+  telemetry_topic: "/rover/soil_telemetry"
+  command_topic: "/rover/cmd_vel"
+  state_topic: "/rover/state"
+
+plantation:
+  center_latitude: 11.3921
+  center_longitude: 77.7342
+  grid_width_meters: 200.0
+  grid_height_meters: 200.0
+  grid_resolution: 50  # 50x50 spatial grid
+
+agronomy_targets:
+  ph_min: 6.5
+  ph_max: 7.5
+  ec_max: 1.0        # dS/m
+  target_n: 350.0    # kg/ha/year
+  target_p: 140.0    # kg/ha/year
+  target_k: 140.0    # kg/ha/year
+
+state_machine:
+  transit_speed: 1.0  # m/s
+  mock_stabilization_seconds: 3
+  actuator_timeout_seconds: 15
+  waypoints:
+    - { lat: 11.3925, lon: 77.7338, id: "WP_001" }
+    - { lat: 11.3928, lon: 77.7345, id: "WP_002" }
+    - { lat: 11.3918, lon: 77.7349, id: "WP_003" }
+    - { lat: 11.3915, lon: 77.7340, id: "WP_004" }
+
+modbus_sensor_zts3002:
+  slave_id: 1
+  baud_rate: 9600
+  parity: "N"
+  data_bits: 8
+  stop_bits: 1
+  register_map:
+    humidity_moisture: 0x0000  # Scale 0.1 %
+    temperature: 0x0001        # Scale 0.1 °C
+    ec: 0x0002                 # Scale 1 us/cm -> 0.001 dS/m
+    ph: 0x0003                 # Scale 0.1 pH
+    nitrogen: 0x0004           # Scale 1 mg/kg or kg/ha
+    phosphorus: 0x0005         # Scale 1 mg/kg or kg/ha
+    potassium: 0x0006          # Scale 1 mg/kg or kg/ha
+  scaling:
+    ph_factor: 0.1
+    ec_factor: 0.001           # Converts us/cm to dS/m
+    moisture_factor: 0.1
+    nitrogen_factor: 1.0
+    phosphorus_factor: 1.0
+    potassium_factor: 1.0
+
+hardware_safety:
+  bottom_limit_pin: 18
+  top_limit_pin: 19
+  actuator_in1_pin: 22
+  actuator_in2_pin: 21
+  locomotion_ena_pin: 33
+  locomotion_in1_pin: 25
+  locomotion_in2_pin: 26
+  locomotion_enb_pin: 32
+  locomotion_in3_pin: 27
+  locomotion_in4_pin: 14
+
+ml:
+  test_size: 0.2
+  random_state: 42
+  baseline_model_path: "models/baseline/rf_nutrient_model.pkl"
+  efficientnet_model_path: "models/efficientnet/spatial_regression.pt"
