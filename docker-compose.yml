@@ -15,6 +15,16 @@ services:
       - ./data:/app/data
       - ./models:/app/models
 
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: precision_sericulture_frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
   dashboard:
     build:
       context: .

@@ -46,16 +46,14 @@ def run_demo():
         time.sleep(1.0)
 
     if not backend_ready:
-        logging.error("FastAPI Backend failed to respond within 15 seconds.")
-        backend_process.terminate()
-        sys.exit(1)
+        logging.error("FastAPI Backend failed to respond within 15 seconds. (Continuing with React Mock Mode)")
 
     # 3. Simulate Rover State Machine Waypoint Steps
     logging.info("STEP 3: Running Rover State Machine Simulation (TRANSIT -> DEPLOYMENT -> INTERROGATION -> RETRACTION)...")
     try:
         from backend.app.services.state_machine import RoverStateMachine
         sm = RoverStateMachine(stabilization_seconds=1)
-        for i in range(15):
+        for i in range(10):
             status = sm.step()
             state = status["rover_state"]
             wp = status["current_waypoint"]["id"]
@@ -68,23 +66,27 @@ def run_demo():
                     requests.post("http://localhost:8000/api/telemetry", json=status["latest_telemetry"], timeout=1.0)
                 except Exception:
                     pass
-            time.sleep(0.5)
+            time.sleep(0.3)
     except Exception as e:
         logging.warning(f"Simulator step execution warning: {e}")
 
-    # 4. Launch Streamlit Dashboard
-    logging.info("STEP 4: Launching Streamlit Dashboard on http://localhost:8501 ...")
-    dashboard_process = subprocess.Popen(
-        [sys.executable, "-m", "streamlit", "run", "dashboard/app.py", "--server.port=8501"],
+    # 4. Launch React TypeScript Frontend Website
+    logging.info("STEP 4: Launching Modern React TypeScript Website on http://localhost:5173 ...")
+    frontend_dir = os.path.join(BASE_DIR, "frontend")
+    frontend_process = subprocess.Popen(
+        "npm run dev",
+        cwd=frontend_dir,
+        shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
     )
 
     time.sleep(3.0)
-    webbrowser.open("http://localhost:8501")
+    webbrowser.open("http://localhost:5173")
 
     logging.info("==================================================================")
-    logging.info("  DEMO RUNNING! Press Ctrl+C in terminal to stop all services.   ")
+    logging.info("  PRECISION SERICULTURE FRONTEND RUNNING ON http://localhost:5173 ")
+    logging.info("  Press Ctrl+C in terminal to stop all services.                 ")
     logging.info("==================================================================")
 
     try:
@@ -93,7 +95,7 @@ def run_demo():
     except KeyboardInterrupt:
         logging.info("Shutting down demonstration services...")
         backend_process.terminate()
-        dashboard_process.terminate()
+        frontend_process.terminate()
         logging.info("Demo stopped cleanly.")
 
 if __name__ == "__main__":
