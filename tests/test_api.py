@@ -88,3 +88,17 @@ def test_missions_endpoint():
     res = client.get("/api/missions")
     assert res.status_code == 200
     assert isinstance(res.json(), list)
+
+def test_dataset_api_endpoints():
+    zones_res = client.get("/api/dataset/zones")
+    assert zones_res.status_code == 200
+    assert len(zones_res.json()) == 7
+
+    stats_res = client.get("/api/dataset/statistics")
+    assert stats_res.status_code == 200
+    assert "parameters" in stats_res.json()
+
+    raw_res = client.get("/api/dataset/raw?page=1&limit=10")
+    assert raw_res.status_code == 200
+    assert len(raw_res.json()["data"]) <= 10
+
