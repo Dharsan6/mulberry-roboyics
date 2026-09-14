@@ -22,7 +22,6 @@ import {
 import { GradientWaves } from '../components/reactbits/GradientWaves';
 import { GlareHover } from '../components/reactbits/GlareHover';
 import { Dock } from '../components/reactbits/Dock';
-import { SpecularButton } from '../components/reactbits/SpecularButton';
 
 interface LandingPageViewProps {
   onEnterDashboard: (tabId?: string) => void;
@@ -119,17 +118,14 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ onEnterDashboa
             <span onClick={() => scrollTo('technology')} className={`cursor-pointer transition-colors ${activeSection === 'technology' ? 'text-emerald-400 font-bold' : 'hover:text-emerald-400'}`}>Technology</span>
           </div>
 
-          <SpecularButton 
+          <button 
             onClick={() => onEnterDashboard()}
-            baseColor="#059669"
-            lineColor="#34d399"
-            intensity={0.75}
-            radius={24}
-            className="text-sm px-4 py-2 border border-emerald-400/50 shadow-md shadow-emerald-900/30"
+            className="flex items-center space-x-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold text-sm shadow-md shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
           >
-            <span className="text-white font-semibold">Explore Dashboard</span>
-            <ArrowRight className="w-4 h-4 text-emerald-200" />
-          </SpecularButton>
+            <LayoutDashboard className="w-4 h-4 text-slate-950" />
+            <span>Live Dashboard</span>
+            <ArrowRight className="w-3.5 h-3.5 text-slate-950" />
+          </button>
         </div>
       </header>
 
@@ -205,24 +201,21 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ onEnterDashboa
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <SpecularButton 
+            <button 
               onClick={() => onEnterDashboard()}
-              baseColor="#059669"
-              lineColor="#34d399"
-              intensity={0.8}
-              radius={9999}
-              className="px-8 py-4 font-bold text-lg border border-emerald-400/60 shadow-xl shadow-emerald-950/60"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-500 hover:from-emerald-300 hover:via-emerald-400 hover:to-teal-400 text-slate-950 font-black text-lg flex items-center justify-center space-x-3 transition-all duration-300 shadow-xl shadow-emerald-950/60 hover:shadow-2xl hover:shadow-emerald-500/30 hover:scale-[1.03] active:scale-[0.98] cursor-pointer group"
             >
-              <span className="text-white">Explore Dashboard</span>
-              <ArrowRight className="w-5 h-5 text-emerald-200" />
-            </SpecularButton>
+              <LayoutDashboard className="w-5 h-5 text-slate-950" />
+              <span>Launch Live Dashboard</span>
+              <ArrowRight className="w-5 h-5 text-slate-950 group-hover:translate-x-1 transition-transform" />
+            </button>
 
             <button 
               onClick={() => scrollTo('how-it-works')} 
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-slate-900/80 hover:bg-slate-850 border border-slate-700/80 hover:border-emerald-500/50 text-slate-200 hover:text-white font-semibold text-lg flex items-center justify-center space-x-2 transition-all shadow-lg shadow-black/40 hover:shadow-xl backdrop-blur-md"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-emerald-500/50 text-slate-200 hover:text-white font-semibold text-lg flex items-center justify-center space-x-2 transition-all shadow-lg shadow-black/40 hover:shadow-xl backdrop-blur-md cursor-pointer group"
             >
               <span>How It Works</span>
-              <ChevronRight className="w-5 h-5 text-slate-400" />
+              <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all" />
             </button>
           </div>
         </div>

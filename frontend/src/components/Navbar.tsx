@@ -6,7 +6,8 @@ import {
   MapPin,
   FileSpreadsheet,
   Database,
-  Cpu
+  Cpu,
+  Home
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -29,13 +30,17 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onRetur
     <aside className="w-64 bg-slate-900/90 border-r border-slate-800 flex flex-col justify-between h-screen sticky top-0 z-40">
       <div>
         {/* Brand Header */}
-        <div className="p-5 border-b border-slate-800/80 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-900/40 text-slate-950 font-extrabold text-xl">
+        <div className="p-4 border-b border-slate-800/80 flex items-center justify-between">
+          <div 
+            onClick={onReturnHome}
+            className="flex items-center space-x-3 cursor-pointer group"
+            title="Click to return to Landing Page"
+          >
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-lg shadow-emerald-900/40 text-slate-950 font-extrabold text-xl group-hover:scale-105 transition-transform">
               <Sprout className="w-6 h-6 text-slate-950" />
             </div>
             <div>
-              <h1 className="font-bold text-white tracking-wide text-base leading-tight">PRECISION</h1>
+              <h1 className="font-bold text-white tracking-wide text-base leading-tight group-hover:text-emerald-400 transition-colors">PRECISION</h1>
               <p className="text-xs text-emerald-400 font-semibold tracking-wider">SERICULTURE AI</p>
             </div>
           </div>
@@ -43,10 +48,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onRetur
           {onReturnHome && (
             <button 
               onClick={onReturnHome}
-              className="p-2 bg-slate-800/50 hover:bg-slate-700/80 rounded-lg text-slate-400 hover:text-emerald-400 transition-colors"
+              className="flex items-center space-x-1.5 px-2.5 py-1 bg-slate-800/80 hover:bg-slate-750 border border-slate-700/80 hover:border-emerald-500/40 rounded-lg text-xs font-semibold text-slate-300 hover:text-emerald-400 transition-all cursor-pointer shadow-xs"
               title="Return to Landing Page"
             >
-              <LayoutDashboard className="w-4 h-4" />
+              <Home className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Home</span>
             </button>
           )}
         </div>

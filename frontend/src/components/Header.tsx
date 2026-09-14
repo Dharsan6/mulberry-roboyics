@@ -6,7 +6,8 @@ import {
   RefreshCw,
   MapPin,
   Clock,
-  Sliders
+  Sliders,
+  ArrowLeft
 } from 'lucide-react';
 import {
   subscribeConnectionState,
@@ -16,9 +17,10 @@ import {
 
 interface HeaderProps {
   onRefresh?: () => void;
+  onReturnHome?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onRefresh }) => {
+export const Header: React.FC<HeaderProps> = ({ onRefresh, onReturnHome }) => {
   const [isMockMode, setIsMockMode] = useState<boolean>(false);
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
@@ -59,8 +61,19 @@ export const Header: React.FC<HeaderProps> = ({ onRefresh }) => {
 
   return (
     <header className="h-16 bg-slate-900/60 border-b border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30 backdrop-blur-md">
-      {/* Left: GPS & Plantation Context */}
+      {/* Left: Navigation back & GPS Context */}
       <div className="flex items-center space-x-4">
+        {onReturnHome && (
+          <button
+            onClick={onReturnHome}
+            className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/90 text-slate-300 hover:text-emerald-400 border border-slate-700/80 hover:border-emerald-500/40 text-xs font-semibold transition-all group shadow-xs cursor-pointer"
+            title="Exit to Landing Page"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform text-emerald-400" />
+            <span>Landing Page</span>
+          </button>
+        )}
+
         <div className="flex items-center space-x-2 text-xs font-mono bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800">
           <MapPin className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
           <span className="text-slate-300">Lat: <strong className="text-emerald-400">11.3921°N</strong></span>
