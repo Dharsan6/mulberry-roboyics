@@ -39,3 +39,6 @@ Thumbs.db
 
 # Database (optional - keep data directory structure)
 # data/*.db
+
+# Large media in root (already tracked under frontend/public/)
+/168572-839370257.mp4

@@ -22,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({ onRefresh }) => {
   const [isMockMode, setIsMockMode] = useState<boolean>(false);
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
-  const [timeStr, setTimeStr] = useState<string>('');
+  const [timeStr, setTimeStr] = useState<string>(new Date().toLocaleTimeString());
 
   useEffect(() => {
     const unsubscribe = subscribeConnectionState((isMock, connected) => {
@@ -38,7 +38,6 @@ export const Header: React.FC<HeaderProps> = ({ onRefresh }) => {
     const clockInterval = setInterval(() => {
       setTimeStr(new Date().toLocaleTimeString());
     }, 1000);
-    setTimeStr(new Date().toLocaleTimeString());
 
     return () => {
       unsubscribe();

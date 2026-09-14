@@ -69,7 +69,7 @@ export const apiService = {
       try {
         const res = await fetch(`${API_BASE_URL}/api/plantation/summary`);
         if (res.ok) return await res.json();
-      } catch (e) {
+      } catch (_e) {
         console.warn('Backend call failed, falling back to mock dataset');
       }
     }
@@ -81,7 +81,7 @@ export const apiService = {
       try {
         const res = await fetch(`${API_BASE_URL}/api/telemetry?limit=${limit}`);
         if (res.ok) return await res.json();
-      } catch (e) {
+      } catch (_e) {
         console.warn('Backend telemetry call failed, falling back to mock dataset');
       }
     }
@@ -93,7 +93,7 @@ export const apiService = {
       try {
         const res = await fetch(`${API_BASE_URL}/api/analysis/${sampleId}`);
         if (res.ok) return await res.json();
-      } catch (e) {
+      } catch (_e) {
         console.warn('Backend analysis call failed');
       }
     }
@@ -106,7 +106,7 @@ export const apiService = {
       try {
         const res = await fetch(`${API_BASE_URL}/api/predictions?model_type=${modelType}`);
         if (res.ok) return await res.json();
-      } catch (e) {
+      } catch (_e) {
         console.warn('Backend spatial predictions call failed');
       }
     }
@@ -118,7 +118,7 @@ export const apiService = {
       try {
         const res = await fetch(`${API_BASE_URL}/api/prescriptions`);
         if (res.ok) return await res.json();
-      } catch (e) {
+      } catch (_e) {
         console.warn('Backend prescriptions call failed');
       }
     }
@@ -130,7 +130,7 @@ export const apiService = {
       try {
         const res = await fetch(`${API_BASE_URL}/api/simulator/status`);
         if (res.ok) return await res.json();
-      } catch (e) {
+      } catch (_e) {
         console.warn('Backend simulator status call failed');
       }
     }
@@ -142,7 +142,7 @@ export const apiService = {
       try {
         const res = await fetch(`${API_BASE_URL}/api/simulator/step`, { method: 'POST' });
         if (res.ok) return await res.json();
-      } catch (e) {
+      } catch (_e) {
         console.warn('Backend simulator step call failed');
       }
     }
@@ -173,7 +173,7 @@ export const apiService = {
       try {
         const res = await fetch(`${API_BASE_URL}/api/simulator/reset`, { method: 'POST' });
         if (res.ok) return await apiService.getSimulatorStatus();
-      } catch (e) {
+      } catch (_e) {
         console.warn('Backend simulator reset call failed');
       }
     }
@@ -186,7 +186,7 @@ export const apiService = {
       try {
         const res = await fetch(`${API_BASE_URL}/api/simulator/estop`, { method: 'POST' });
         if (res.ok) return await apiService.getSimulatorStatus();
-      } catch (e) {
+      } catch (_e) {
         console.warn('Backend E-Stop call failed');
       }
     }

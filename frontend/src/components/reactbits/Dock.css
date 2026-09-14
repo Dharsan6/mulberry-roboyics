@@ -1,0 +1,103 @@
+.dock-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.dock-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.88); /* white/88 glass */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(226, 232, 240, 0.9); /* slate-200 */
+  box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.12), 0 4px 6px -2px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  pointer-events: auto;
+}
+
+.dock-item-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+}
+
+.dock-item-wrapper:focus-visible .dock-icon-inner {
+  box-shadow: 0 0 0 2px #0284c7; /* sky-600 */
+}
+
+.dock-icon-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(241, 245, 249, 0.8); /* slate-100 */
+  border: 1px solid rgba(226, 232, 240, 0.8); /* slate-200 */
+  color: #64748b; /* slate-500 */
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  position: relative;
+}
+
+.dock-icon-inner:hover {
+  background: rgba(224, 242, 254, 0.9); /* sky-100 */
+  color: #0284c7; /* sky-600 */
+  border-color: rgba(186, 230, 253, 0.9); /* sky-200 */
+}
+
+.dock-icon-inner.active {
+  color: #0284c7; /* sky-600 */
+  background: rgba(224, 242, 254, 0.95); /* sky-100 */
+  border-color: rgba(56, 189, 248, 0.6); /* sky-400 */
+}
+
+.dock-active-indicator {
+  position: absolute;
+  bottom: -4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #0284c7; /* sky-600 */
+  box-shadow: 0 0 8px rgba(2, 132, 199, 0.6);
+}
+
+.dock-tooltip {
+  position: absolute;
+  top: -45px;
+  background: rgba(15, 23, 42, 0.92); /* slate-900 */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Tooltip arrow */
+.dock-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: rgba(15, 23, 42, 0.92);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}

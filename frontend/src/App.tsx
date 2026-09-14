@@ -7,8 +7,10 @@ import { AgronomyView } from './views/AgronomyView';
 import { SpatialMLView } from './views/SpatialMLView';
 import { PrescriptionsView } from './views/PrescriptionsView';
 import { SamplesView } from './views/SamplesView';
+import { LandingPageView } from './views/LandingPageView';
 
 export function App() {
+  const [currentRoute, setCurrentRoute] = useState<'landing' | 'app'>('landing');
   const [activeTab, setActiveTab] = useState<string>('overview');
 
   const renderActiveView = () => {
@@ -30,10 +32,21 @@ export function App() {
     }
   };
 
+  if (currentRoute === 'landing') {
+    return (
+      <LandingPageView 
+        onEnterDashboard={(tabId) => {
+          if (tabId) setActiveTab(tabId);
+          setCurrentRoute('app');
+        }} 
+      />
+    );
+  }
+
   return (
     <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
       {/* Sidebar Navigation */}
-      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} onReturnHome={() => setCurrentRoute('landing')} />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
