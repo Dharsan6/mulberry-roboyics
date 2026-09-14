@@ -6,12 +6,12 @@
   padding: 12px 28px;
   font-weight: 600;
   color: #f8fafc;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #0284c7;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  background: #059669;
   cursor: pointer;
   outline: none;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(2, 132, 199, 0.25);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
   user-select: none;
 }
 

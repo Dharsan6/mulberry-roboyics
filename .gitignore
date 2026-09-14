@@ -42,3 +42,8 @@ Thumbs.db
 
 # Large media in root (already tracked under frontend/public/)
 /168572-839370257.mp4
+
+# ROS2 build artifacts
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
