@@ -65,6 +65,16 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onRetur
 
         {/* Nav Items */}
         <nav className="p-3 space-y-1">
+          {onReturnHome && (
+            <button
+              onClick={onReturnHome}
+              className="w-full mb-2.5 flex items-center space-x-3 px-3.5 py-2.5 rounded-lg font-semibold text-sm text-emerald-400 bg-emerald-950/50 hover:bg-emerald-900/60 border border-emerald-500/30 hover:border-emerald-400/60 transition-all duration-200 cursor-pointer shadow-xs group"
+            >
+              <Home className="w-4 h-4 text-emerald-400 group-hover:-translate-x-0.5 transition-transform" />
+              <span>← Back to Landing Page</span>
+            </button>
+          )}
+
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
